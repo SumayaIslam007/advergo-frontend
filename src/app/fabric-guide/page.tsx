@@ -1,0 +1,29 @@
+import type { Metadata } from "next";
+import { PageHeader } from "@/components/layout/page-header";
+import { Section } from "@/components/ui/section";
+import { FabricCard } from "@/components/sections/fabric/fabric-card";
+import { fabrics } from "@/lib/data";
+
+export const metadata: Metadata = {
+  title: "Fabric guide",
+  description: "Explore the fabrics Advergo uses for custom sportswear — Pin Mesh, Sugar Mesh, Brush Jacquard, Honeycomb, Nylon Spandex, and Lurex Box Mesh.",
+};
+
+export default function FabricGuidePage() {
+  return (
+    <div className="min-h-screen bg-brand-grey-light">
+      <PageHeader
+        eyebrow="Materials"
+        title="Fabric guide"
+        subtitle="We source top-tier materials — all undergo rigorous testing for colour fastness, shrinkage control, and long-lasting comfort."
+      />
+      <Section background="grey">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          {fabrics.map((fabric) => (
+            <FabricCard key={fabric.name} fabric={fabric} />
+          ))}
+        </div>
+      </Section>
+    </div>
+  );
+}
