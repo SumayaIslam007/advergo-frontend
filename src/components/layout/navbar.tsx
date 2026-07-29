@@ -2,13 +2,26 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Heart, LogOut, User as UserIcon } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { AuthUser } from "@/types";
 import { navLinks } from "./nav-links";
 
-export function Navbar() {
+interface NavbarProps {
+  user: AuthUser | null;
+}
+
+export function Navbar({ user }: NavbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <nav className="sticky top-0 z-50 border-b border-brand-border bg-white shadow-[0_1px_8px_rgba(0,0,0,0.05)]">
@@ -41,6 +54,34 @@ export function Navbar() {
               </Link>
             );
           })}
+
+          {user ? (
+            <div className="flex items-center gap-4">
+              <Link
+                href="/wishlist"
+                aria-label="My wishlist"
+                className="text-brand-grey-dark transition-colors hover:text-brand-red"
+              >
+                <Heart size={17} />
+              </Link>
+              <span className="flex items-center gap-1.5 text-[13px] font-semibold text-brand-grey-dark">
+                <UserIcon size={14} /> {user.fullName || user.email}
+              </span>
+              <button
+                type="button"
+                onClick={handleLogout}
+                aria-label="Log out"
+                className="text-brand-grey-mid transition-colors hover:text-brand-red"
+              >
+                <LogOut size={16} />
+              </button>
+            </div>
+          ) : (
+            <Link href="/login" className="text-[13px] font-semibold text-brand-grey-dark hover:text-brand-red">
+              Log in
+            </Link>
+          )}
+
           <Button href="/quote" size="sm">
             Get a quote
           </Button>

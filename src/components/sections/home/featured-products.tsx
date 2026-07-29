@@ -7,9 +7,11 @@ import type { Product } from "@/types";
 
 interface FeaturedProductsProps {
   products: Product[];
+  wishlistedProductIds?: number[];
 }
 
-export function FeaturedProducts({ products }: FeaturedProductsProps) {
+export function FeaturedProducts({ products, wishlistedProductIds = [] }: FeaturedProductsProps) {
+  const wishlistedIds = new Set(wishlistedProductIds);
   return (
     <Section background="grey">
       <div className="mb-9 flex items-end justify-between">
@@ -23,7 +25,7 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
       </div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} initiallyWishlisted={wishlistedIds.has(product.id)} />
         ))}
       </div>
     </Section>

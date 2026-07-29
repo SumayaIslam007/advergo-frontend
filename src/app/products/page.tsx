@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
 import { Section } from "@/components/ui/section";
 import { ProductCatalog } from "@/components/sections/products/product-catalog";
-import { products } from "@/lib/data";
+import { getProducts, safe } from "@/lib/api";
+import { getMyWishlistProductIds } from "@/lib/auth/wishlist";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -15,6 +16,10 @@ interface ProductsPageProps {
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const { category } = await searchParams;
+  const [products, wishlistedIds] = await Promise.all([
+    safe(getProducts(), []),
+    getMyWishlistProductIds(),
+  ]);
 
   return (
     <div className="min-h-screen bg-brand-grey-light">
@@ -24,7 +29,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         subtitle="Custom-manufactured sportswear across 5 sport categories."
       />
       <Section background="grey">
-        <ProductCatalog products={products} initialCategory={category ?? "all"} />
+        <ProductCatalog
+          products={products}
+          initialCategory={category ?? "all"}
+          wishlistedProductIds={[...wishlistedIds]}
+        />
       </Section>
     </div>
   );

@@ -1,8 +1,12 @@
 import { MessageCircle } from "lucide-react";
-import { company } from "@/lib/data";
+import type { CompanyInfo } from "@/types";
+
+interface WhatsAppButtonProps {
+  company: CompanyInfo;
+}
 
 /** Floating WhatsApp CTA — links straight to a pre-filled chat. */
-export function WhatsAppButton() {
+export function WhatsAppButton({ company }: WhatsAppButtonProps) {
   const digitsOnly = company.phone.replace(/[^\d]/g, "");
   return (
     <a

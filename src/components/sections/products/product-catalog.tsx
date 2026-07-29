@@ -8,12 +8,14 @@ import { ProductCard } from "./product-card";
 interface ProductCatalogProps {
   products: Product[];
   initialCategory?: string;
+  wishlistedProductIds?: number[];
 }
 
 const filterOptions = ["all", "football", "cricket", "cycling", "marathon", "corporate"] as const;
 
 /** Client-side filterable grid used on the /products page. */
-export function ProductCatalog({ products, initialCategory = "all" }: ProductCatalogProps) {
+export function ProductCatalog({ products, initialCategory = "all", wishlistedProductIds = [] }: ProductCatalogProps) {
+  const wishlistedIds = new Set(wishlistedProductIds);
   const [filter, setFilter] = useState<string>(initialCategory);
 
   const filtered = useMemo(
@@ -44,7 +46,7 @@ export function ProductCatalog({ products, initialCategory = "all" }: ProductCat
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} initiallyWishlisted={wishlistedIds.has(product.id)} />
           ))}
         </div>
       ) : (

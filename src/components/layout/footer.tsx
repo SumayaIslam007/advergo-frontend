@@ -1,8 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { company } from "@/lib/data";
+import type { CompanyInfo } from "@/types";
 import { navLinks } from "./nav-links";
+
+interface FooterProps {
+  company: CompanyInfo;
+}
 
 const categoryLinks = [
   { label: "Football", href: "/products?category=football" },
@@ -14,7 +18,7 @@ const categoryLinks = [
 
 const legalLinks = ["Privacy policy", "Terms & conditions", "Return policy"];
 
-export function Footer() {
+export function Footer({ company }: FooterProps) {
   return (
     <footer className="bg-[#0f1117] px-6 pb-7 pt-14 text-white">
       <div className="mx-auto max-w-[1140px]">

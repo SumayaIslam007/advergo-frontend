@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Stars } from "@/components/ui/stars";
@@ -9,6 +11,7 @@ import type { Product } from "@/types";
 
 interface ProductCardProps {
   product: Product;
+  initiallyWishlisted?: boolean;
 }
 
 /** Placeholder jersey graphic — swap for a real product photo when available. */
@@ -30,19 +33,46 @@ function JerseyPlaceholder({ color }: { color: string }) {
   );
 }
 
-export function ProductCard({ product }: ProductCardProps) {
-  const [wished, setWished] = useState(false);
+export function ProductCard({ product, initiallyWishlisted = false }: ProductCardProps) {
+  const [wished, setWished] = useState(initiallyWishlisted);
+  const [pending, setPending] = useState(false);
+  const router = useRouter();
+
+  const toggleWishlist = async () => {
+    if (pending) return;
+    setPending(true);
+    const response = await fetch("/api/wishlist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product: product.id }),
+    });
+    if (response.status === 401) {
+      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
+      setPending(false);
+      return;
+    }
+    const data = await response.json();
+    setWished(Boolean(data.wishlisted));
+    setPending(false);
+  };
 
   return (
     <div className="group overflow-hidden rounded-xl bg-white shadow-[0_2px_16px_rgba(0,0,0,0.07)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(0,0,0,0.11)]">
       <div className="relative">
-        <JerseyPlaceholder color={product.accentColor} />
+        {product.image ? (
+          <div className="relative h-[180px] w-full overflow-hidden bg-gray-100">
+            <Image src={product.image} alt={product.name} fill className="object-cover" />
+          </div>
+        ) : (
+          <JerseyPlaceholder color={product.accentColor} />
+        )}
         <button
           type="button"
-          onClick={() => setWished((v) => !v)}
+          onClick={toggleWishlist}
+          disabled={pending}
           aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
           aria-pressed={wished}
-          className="absolute right-2.5 top-2.5 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white shadow-[0_2px_16px_rgba(0,0,0,0.07)]"
+          className="absolute right-2.5 top-2.5 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white shadow-[0_2px_16px_rgba(0,0,0,0.07)] disabled:opacity-60"
         >
           <Heart size={13} className={cn(wished ? "fill-brand-red text-brand-red" : "text-brand-grey-mid")} />
         </button>
@@ -62,10 +92,10 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
         <p className="mb-3.5 text-[15px] font-extrabold text-brand-red">{product.priceRange}</p>
         <div className="flex gap-2">
-          <Button href="/quote" size="sm" className="flex-1 justify-center py-2 text-[11px]">
+          <Button href={`/quote?product=${product.id}`} size="sm" className="flex-1 justify-center py-2 text-[11px]">
             Order now
           </Button>
-          <Button href="/quote" variant="outline" className="px-3 py-1.5 text-[11px]">
+          <Button href={`/quote?product=${product.id}`} variant="outline" className="px-3 py-1.5 text-[11px]">
             Quote
           </Button>
         </div>

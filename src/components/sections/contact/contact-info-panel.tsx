@@ -1,16 +1,17 @@
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { company } from "@/lib/data";
+import { getCompanyInfoSafe } from "@/lib/api";
 
-const infoRows = [
-  { icon: Phone, label: "Phone", value: company.phone },
-  { icon: MessageCircle, label: "WhatsApp", value: company.phone },
-  { icon: Mail, label: "Email", value: company.email },
-  { icon: MapPin, label: "Head office", value: company.headOffice },
-  { icon: MapPin, label: "Factory", value: company.factory },
-];
-
-export function ContactInfoPanel() {
+export async function ContactInfoPanel() {
+  const company = await getCompanyInfoSafe();
   const digitsOnly = company.phone.replace(/[^\d]/g, "");
+
+  const infoRows = [
+    { icon: Phone, label: "Phone", value: company.phone },
+    { icon: MessageCircle, label: "WhatsApp", value: company.phone },
+    { icon: Mail, label: "Email", value: company.email },
+    { icon: MapPin, label: "Head office", value: company.headOffice },
+    { icon: MapPin, label: "Factory", value: company.factory },
+  ];
 
   return (
     <div className="flex flex-col gap-4">

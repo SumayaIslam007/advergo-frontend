@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
 import { Section } from "@/components/ui/section";
 import { FabricCard } from "@/components/sections/fabric/fabric-card";
-import { fabrics } from "@/lib/data";
+import { getFabrics, safe } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Fabric guide",
   description: "Explore the fabrics Advergo uses for custom sportswear — Pin Mesh, Sugar Mesh, Brush Jacquard, Honeycomb, Nylon Spandex, and Lurex Box Mesh.",
 };
 
-export default function FabricGuidePage() {
+export default async function FabricGuidePage() {
+  const fabrics = await safe(getFabrics(), []);
+
   return (
     <div className="min-h-screen bg-brand-grey-light">
       <PageHeader
@@ -20,7 +22,7 @@ export default function FabricGuidePage() {
       <Section background="grey">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {fabrics.map((fabric) => (
-            <FabricCard key={fabric.name} fabric={fabric} />
+            <FabricCard key={fabric.id} fabric={fabric} />
           ))}
         </div>
       </Section>

@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { getCompanyInfoSafe } from "@/lib/api";
+import { getCurrentUser } from "@/lib/auth/server-fetch";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,14 +26,16 @@ export const metadata: Metadata = {
     "Advergo Sports & Fashion Wear Ltd., a premier custom sportswear manufacturer in Bangladesh, offering football, cricket, cycling, marathon, and corporate apparel.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const [company, user] = await Promise.all([getCompanyInfoSafe(), getCurrentUser()]);
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
-        <Navbar />
+        <Navbar user={user} />
         <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <Footer company={company} />
+        <WhatsAppButton company={company} />
       </body>
     </html>
   );

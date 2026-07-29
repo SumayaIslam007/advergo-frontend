@@ -6,7 +6,7 @@ import { ImageOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ImageWithFallbackProps {
-  src: string;
+  src: string | null;
   alt: string;
   height?: number;
   className?: string;

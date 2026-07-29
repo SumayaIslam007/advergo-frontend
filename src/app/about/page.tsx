@@ -5,7 +5,7 @@ import { Heading } from "@/components/ui/heading";
 import { Section } from "@/components/ui/section";
 import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 import { PageHeader } from "@/components/layout/page-header";
-import { company } from "@/lib/data";
+import { getCompanyInfoSafe } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "About us",
@@ -19,7 +19,9 @@ const capabilityStats = [
   { icon: "📦", label: "Daily capacity", value: "2,000+ pieces" },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const company = await getCompanyInfoSafe();
+
   return (
     <div className="bg-white">
       <PageHeader

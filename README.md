@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Advergo Frontend
 
-## Getting Started
+Next.js (App Router) storefront for Advergo Sports & Fashion Wear Ltd. -- product catalog, fabric
+guide, custom quote flow with live pricing, and customer accounts/wishlist. Talks to the
+[Django backend](../advergo-backend) over its REST API.
 
-First, run the development server:
+## Setup
 
 ```bash
+cp .env.example .env.local   # sets NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The backend must be running (see `advergo-backend/README.md`) for pages to render real data --
+every catalog/content page fetches from the Django API server-side; there's no local static
+fallback data anymore.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Auth
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Login/registration go through Next.js Route Handlers (`src/app/api/auth/*`), which proxy to the
+Django backend and store the resulting JWTs as **httpOnly cookies** -- never exposed to
+client-side JS, so an XSS bug can't be used to steal a session token. `src/lib/auth/server-fetch.ts`
+(`authFetch`) wraps calls from Server Components/Route Handlers with the cookie's access token and
+transparently refreshes it once on a 401 before giving up.
 
-## Learn More
+Client Components that need an authenticated mutation (e.g. the wishlist heart button) call a
+same-origin Next.js route (`/api/wishlist`) rather than hitting Django directly, so the browser
+never needs to see the token at all -- the route handler reads it from the cookie server-side.
 
-To learn more about Next.js, take a look at the following resources:
+## Project layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+  app/                  routes (App Router)
+    api/auth/            login/register/logout/me route handlers (BFF -- sets httpOnly cookies)
+    api/wishlist/         same-origin proxy for the wishlist toggle (Client Components use this)
+    login/, register/     account pages
+    wishlist/              "my wishlist" page (server-rendered, redirects to /login if signed out)
+  components/
+    ui/                  generic primitives (Button, Field, SelectField, Section, ...)
+    layout/              Navbar, Footer, WhatsAppButton (shared chrome)
+    sections/<page>/     page-specific composite blocks
+  lib/
+    api/                 typed fetch functions against the public Django API (catalog, content,
+                         reviews, pricing, quotes) + the `safe()` fallback wrapper
+    auth/                cookie helpers, `authFetch`, `getCurrentUser`, wishlist server helper
+  types/index.ts         content + auth + form value types, mirroring the backend's API shape
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+New page → folder in `src/app/` + a `sections/<name>/` folder for its blocks. New reusable UI
+primitive → `src/components/ui/`. New content type → add the interface to `types/index.ts`, then
+a fetch function in `src/lib/api/`.
 
-## Deploy on Vercel
+## Resilience note
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Every data-fetching call site in a page goes through `safe(promise, fallback)`
+(`src/lib/api/client.ts`) rather than being awaited directly. This isn't defensive-for-the-sake-of-it:
+during testing, a transient backend hiccup inside `Promise.all` threw uncaught, which tripped
+Next's dev-mode error-recovery into a reload loop that hammered the backend far harder than the
+original hiccup. `safe()` means a page degrades to an empty/placeholder state instead of crashing.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Testing & linting
+
+```bash
+npx tsc --noEmit
+npx eslint .
+```
+
+There is no frontend test suite yet (no component/e2e tests configured). Changes have been
+verified manually via `npm run dev` + a real browser for every phase of work so far.

@@ -1,15 +1,3 @@
-// import Image from "next/image";
-
-// export default function HomePage() {
-//   return (
-//     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-//       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-//         Hello world
-//       </main>
-//     </div>
-//   );
-// }
-
 import { Hero } from "@/components/sections/home/hero";
 import { StatsBar } from "@/components/sections/home/stats-bar";
 import { Categories } from "@/components/sections/home/categories";
@@ -21,23 +9,50 @@ import { Testimonials } from "@/components/sections/home/testimonials";
 import { GalleryPreview } from "@/components/sections/home/gallery-preview";
 import { ClientLogos } from "@/components/sections/home/client-logos";
 import {
-  stats,
-  sportCategories,
-  products,
-  processSteps,
-  achievements,
-  reviews,
-  galleryItems,
-  clientLogos,
-} from "@/lib/data";
+  getActiveBanner,
+  getAchievements,
+  getCategories,
+  getClientLogos,
+  getGalleryItems,
+  getProcessSteps,
+  getProducts,
+  getReviews,
+  getStats,
+  safe,
+} from "@/lib/api";
+import { getMyWishlistProductIds } from "@/lib/auth/wishlist";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [
+    banner,
+    stats,
+    sportCategories,
+    products,
+    processSteps,
+    achievements,
+    reviews,
+    galleryItems,
+    clientLogos,
+    wishlistedIds,
+  ] = await Promise.all([
+    safe(getActiveBanner(), null),
+    safe(getStats(), []),
+    safe(getCategories(), []),
+    safe(getProducts({ featured: true }), []),
+    safe(getProcessSteps(), []),
+    safe(getAchievements(), []),
+    safe(getReviews(), []),
+    safe(getGalleryItems(), []),
+    safe(getClientLogos(), []),
+    getMyWishlistProductIds(),
+  ]);
+
   return (
     <>
-      <Hero />
+      <Hero banner={banner} />
       <StatsBar stats={stats} />
       <Categories categories={sportCategories} />
-      <FeaturedProducts products={products} />
+      <FeaturedProducts products={products} wishlistedProductIds={[...wishlistedIds]} />
       <HowItWorks steps={processSteps} />
       <CtaBanner />
       <Achievements achievements={achievements} />

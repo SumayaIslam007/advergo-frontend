@@ -41,18 +41,32 @@ export interface Product {
   id: number;
   name: string;
   category: string;
+  categorySlug: string;
   priceRange: string;
   fabric: string;
   rating: number;
   reviewCount: number;
   accentColor: string;
+  image: string | null;
+  isFeatured: boolean;
 }
 
 export interface Fabric {
+  id: number;
   name: string;
   grade: string;
   bestFor: string;
   description: string;
+  image: string | null;
+}
+
+export interface Banner {
+  id: number;
+  title: string;
+  subtitle: string;
+  image: string | null;
+  ctaLabel: string;
+  ctaHref: string;
 }
 
 export interface Review {
@@ -66,7 +80,7 @@ export type GalleryCategory = "factory" | "clients";
 
 export interface GalleryItem {
   id: number;
-  src: string;
+  src: string | null;
   label: string;
   category: GalleryCategory;
   description: string;
@@ -91,19 +105,58 @@ export interface ProcessStep {
   emoji: string;
 }
 
+export interface SizeChartRow {
+  id: number;
+  categorySlug: string | null;
+  sizeLabel: string;
+  chestIn: number | null;
+  lengthIn: number | null;
+  shoulderIn: number | null;
+  sleeveIn: number | null;
+}
+
+export interface PriceEstimate {
+  unitPriceLow: number;
+  unitPriceHigh: number;
+  totalLow: number;
+  totalHigh: number;
+  discountPercent: number;
+}
+
 export interface QuoteFormValues {
   name: string;
   phone: string;
   email: string;
   category: string;
-  product: string;
-  quantity: string;
+  product: number | "";
+  fabric: number | "";
+  quantity: number | "";
   sizeBreakdown: string;
   notes: string;
+}
+
+export interface QuoteRequestResult {
+  referenceCode: string;
+  estimatedPriceLow: number | null;
+  estimatedPriceHigh: number | null;
 }
 
 export interface ContactFormValues {
   name: string;
   contact: string;
   message: string;
+}
+
+export interface AuthUser {
+  id: number;
+  email: string;
+  phone: string | null;
+  fullName: string;
+  isStaff: boolean;
+}
+
+export interface WishlistItem {
+  id: number;
+  product: Product;
+  createdAt: string;
 }
