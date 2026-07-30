@@ -25,7 +25,7 @@ export function Footer({ company }: FooterProps) {
         <div className="mb-10 grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.4fr]">
           <div>
             <div className="mb-4 flex items-center gap-2.5">
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[10px] sm:h-24 sm:w-24">
+              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[10px] sm:h-28 sm:w-28 md:h-32 md:w-32 lg:h-36 lg:w-36">
                 <Image src="/logo-footer.png" alt="Advergo logo" fill className="object-contain" />
               </div>
               {/* <div>

@@ -28,9 +28,9 @@ export function Navbar({ user }: NavbarProps) {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-brand-border bg-white shadow-[0_1px_8px_rgba(0,0,0,0.05)]">
-      <div className="mx-auto flex h-16 max-w-[1140px] items-center justify-between px-4 sm:h-20 sm:px-6">
+      <div className="mx-auto flex h-24 max-w-[1140px] items-center justify-between px-4 sm:h-28 sm:px-6">
         <Link href="/" className="flex shrink-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
-          <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-[10px] sm:h-14 sm:w-14">
+          <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-[10px] sm:h-32 sm:w-32 lg:h-36 lg:w-36">
             <Image src="/logo-header.png" alt="Advergo logo" fill className="object-contain" />
           </div>
         </Link>
