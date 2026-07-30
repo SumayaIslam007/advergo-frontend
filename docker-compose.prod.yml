@@ -1,20 +1,17 @@
-# Production stack. `web` binds directly to a host port (3000) -- point your
-# own reverse proxy / Cloudflare Tunnel / whatever at it.
+# Production stack. `web` binds to 127.0.0.1 only -- Cloudflare Tunnel
+# reaches it over localhost, so it's never exposed on the VPS's public
+# interface directly.
 #
-# NEXT_PUBLIC_API_URL is inlined into the client JS bundle at *build* time,
-# so it must come from --env-file (Compose variable substitution into
-# build.args below), not just env_file (which only affects the running
-# container, too late for a value baked into already-built JS):
+# The image is pulled pre-built from Docker Hub (built by CI, with
+# NEXT_PUBLIC_API_URL already baked in at build time -- see the workflow's
+# build step), not built here.
 #
-#   docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
+#   docker compose -f docker-compose.prod.yml --env-file .env.prod pull
+#   docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    image: ${DOCKERHUB_USERNAME}/advergo-frontend:${IMAGE_TAG:-latest}
     restart: unless-stopped
     env_file: .env.prod
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3010:3000"
