@@ -21,13 +21,13 @@ export function Footer() {
         <div className="mb-10 grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.4fr]">
           <div>
             <div className="mb-4 flex items-center gap-2.5">
-              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-[10px]">
-                <Image src="/logo.png" alt="Advergo logo" fill className="object-contain" />
+              <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-[10px]">
+                <Image src="/logo-footer.png" alt="Advergo logo" fill className="object-contain" />
               </div>
-              <div>
+              {/* <div>
                 <div className="text-[13px] font-extrabold tracking-[0.04em]">ADVERGO</div>
                 <div className="text-[9px] tracking-[0.1em] text-gray-500">SPORTS &amp; FASHION WEAR LTD.</div>
-              </div>
+              </div> */}
             </div>
             <p className="mb-3.5 max-w-[240px] text-[13px] leading-[1.75] text-gray-400">
               Premium custom sportswear manufacturer since 2019. Serving 10,000+ local and international

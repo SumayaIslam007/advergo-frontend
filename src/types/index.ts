@@ -53,6 +53,7 @@ export interface Fabric {
   grade: string;
   bestFor: string;
   description: string;
+  image: string;
 }
 
 export interface Review {
