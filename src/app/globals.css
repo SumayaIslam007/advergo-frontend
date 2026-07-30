@@ -12,8 +12,8 @@
   --font-mono: var(--font-geist-mono);
 
   /* Brand tokens — generates bg-brand-red, text-brand-red, border-brand-red, etc. */
-  --color-brand-red: #eb2127;
-  --color-brand-red-dark: #c8151b;
+  --color-brand-red: #a91218;
+  --color-brand-red-dark: #8a0f14;
   --color-brand-black: #010101;
   --color-brand-grey-light: #f8f8f8;
   --color-brand-grey-mid: #6b7280;
