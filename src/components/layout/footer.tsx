@@ -25,7 +25,7 @@ export function Footer({ company }: FooterProps) {
         <div className="mb-10 grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.4fr]">
           <div>
             <div className="mb-4 flex items-center gap-2.5">
-              <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-[10px]">
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[10px] sm:h-24 sm:w-24">
                 <Image src="/logo-footer.png" alt="Advergo logo" fill className="object-contain" />
               </div>
               {/* <div>
@@ -73,7 +73,7 @@ export function Footer({ company }: FooterProps) {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-gray-800 pt-5 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-gray-800 pt-5 sm:flex-row sm:pr-20">
           <p className="text-[11px] text-gray-600">
             © {new Date().getFullYear()} {company.name} All rights reserved.
           </p>

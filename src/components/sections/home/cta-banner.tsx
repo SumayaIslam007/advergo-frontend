@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 export function CtaBanner() {
   return (
     <section className="relative overflow-hidden bg-brand-red px-6 py-[72px]">
-      <div className="pointer-events-none absolute right-[-24px] top-1/2 -translate-y-1/2 select-none text-[180px] font-black leading-none text-white opacity-[0.06]">
+      <div className="pointer-events-none absolute right-[-24px] top-1/2 hidden -translate-y-1/2 select-none text-[120px] font-black leading-none text-white opacity-[0.06] sm:block lg:text-[180px]">
         CUSTOM
       </div>
       <div className="relative mx-auto max-w-[1140px] text-center">
