@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ImageWithFallback } from "@/components/ui/image-with-fallback";
+import { Reveal } from "@/components/ui/reveal";
 import { cn } from "@/lib/utils";
 import type { GalleryCategory, GalleryItem } from "@/types";
 
@@ -42,27 +43,26 @@ export function GalleryGrid({ items }: GalleryGridProps) {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((item) => (
-          <div
-            key={item.id}
-            className="overflow-hidden rounded-xl bg-white shadow-[0_2px_16px_rgba(0,0,0,0.07)] transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_10px_32px_rgba(0,0,0,0.12)]"
-          >
-            <ImageWithFallback src={item.src} alt={item.label} height={210} className="rounded-none" />
-            <div className="px-4 py-3">
-              <div className="flex items-center justify-between">
-                <p className="text-[13px] font-bold text-black">{item.label}</p>
-                <span
-                  className={cn(
-                    "rounded-full px-2 py-0.5 text-[10px] font-semibold",
-                    item.category === "clients" ? "bg-brand-red/10 text-brand-red" : "bg-brand-grey-light text-brand-grey-mid"
-                  )}
-                >
-                  {item.category === "factory" ? "Factory" : "Client"}
-                </span>
+        {visible.map((item, i) => (
+          <Reveal key={item.id} delay={(i % 6) * 0.05}>
+            <div className="overflow-hidden rounded-xl border border-brand-border bg-white transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white hover:shadow-[0_20px_40px_-12px_rgba(15,17,23,0.14)]">
+              <ImageWithFallback src={item.src} alt={item.label} height={210} className="rounded-none" />
+              <div className="px-4 py-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-[13px] font-bold text-brand-black">{item.label}</p>
+                  <span
+                    className={cn(
+                      "rounded-full px-2 py-0.5 text-[10px] font-semibold",
+                      item.category === "clients" ? "bg-brand-red/10 text-brand-red" : "bg-brand-grey-light text-brand-grey-mid"
+                    )}
+                  >
+                    {item.category === "factory" ? "Factory" : "Client"}
+                  </span>
+                </div>
+                <p className="mt-0.5 text-[11px] text-brand-grey-mid">{item.description}</p>
               </div>
-              <p className="mt-0.5 text-[11px] text-brand-grey-mid">{item.description}</p>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </div>

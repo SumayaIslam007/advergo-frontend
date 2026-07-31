@@ -20,7 +20,7 @@ const legalLinks = ["Privacy policy", "Terms & conditions", "Return policy"];
 
 export function Footer({ company }: FooterProps) {
   return (
-    <footer className="bg-[#0f1117] px-6 pb-7 pt-14 text-white">
+    <footer className="bg-brand-black px-6 pb-7 pt-16 text-white sm:pt-20">
       <div className="mx-auto max-w-[1140px]">
         <div className="mb-10 grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.4fr]">
           <div>
@@ -43,7 +43,11 @@ export function Footer({ company }: FooterProps) {
           <div>
             <p className="mb-3.5 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-red">Pages</p>
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="mb-2.5 block text-[13px] text-gray-400 hover:text-white">
+              <Link
+                key={link.href}
+                href={link.href}
+                className="mb-2.5 block w-fit text-[13px] text-gray-400 transition-all duration-150 hover:translate-x-0.5 hover:text-white"
+              >
                 {link.label}
               </Link>
             ))}
@@ -52,7 +56,11 @@ export function Footer({ company }: FooterProps) {
           <div>
             <p className="mb-3.5 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-red">Categories</p>
             {categoryLinks.map((link) => (
-              <Link key={link.label} href={link.href} className="mb-2.5 block text-[13px] text-gray-400 hover:text-white">
+              <Link
+                key={link.label}
+                href={link.href}
+                className="mb-2.5 block w-fit text-[13px] text-gray-400 transition-all duration-150 hover:translate-x-0.5 hover:text-white"
+              >
                 {link.label}
               </Link>
             ))}

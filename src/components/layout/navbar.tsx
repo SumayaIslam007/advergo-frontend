@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, LogOut, Menu, User as UserIcon, X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { AuthUser } from "@/types";
@@ -18,6 +19,10 @@ export function Navbar({ user }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => setScrolled(latest > 16));
 
   const handleLogout = async () => {
     setMenuOpen(false);
@@ -27,10 +32,25 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-brand-border bg-white shadow-[0_1px_8px_rgba(0,0,0,0.05)]">
-      <div className="mx-auto flex h-24 max-w-[1140px] items-center justify-between px-4 sm:h-28 sm:px-6">
+    <nav
+      className={cn(
+        "sticky top-0 z-50 border-b transition-colors duration-300",
+        scrolled ? "border-brand-border bg-white/85 backdrop-blur-md" : "border-transparent bg-white"
+      )}
+    >
+      <div
+        className={cn(
+          "mx-auto flex max-w-[1140px] items-center justify-between px-4 transition-[height] duration-300 sm:px-6",
+          scrolled ? "h-18 sm:h-20" : "h-24 sm:h-28"
+        )}
+      >
         <Link href="/" className="flex shrink-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
-          <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-[10px] sm:h-32 sm:w-32 lg:h-36 lg:w-36">
+          <div
+            className={cn(
+              "relative shrink-0 overflow-hidden rounded-[10px] transition-all duration-300",
+              scrolled ? "h-16 w-16 sm:h-[72px] sm:w-[72px]" : "h-28 w-28 sm:h-32 sm:w-32 lg:h-36 lg:w-36"
+            )}
+          >
             <Image src="/logo-header.png" alt="Advergo logo" fill className="object-contain" />
           </div>
         </Link>
@@ -43,11 +63,18 @@ export function Navbar({ user }: NavbarProps) {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "border-b-2 border-transparent pb-0.5 text-[14px] font-semibold whitespace-nowrap transition-colors xl:text-[15px]",
-                  active ? "border-brand-red text-brand-red" : "text-brand-grey-dark hover:text-brand-red"
+                  "relative pb-1.5 text-[14px] font-semibold whitespace-nowrap transition-colors xl:text-[15px]",
+                  active ? "text-brand-black" : "text-brand-grey-dark hover:text-brand-black"
                 )}
               >
                 {link.label}
+                {active && (
+                  <motion.span
+                    layoutId="nav-active-underline"
+                    className="absolute inset-x-0 -bottom-0.5 h-[2px] rounded-full bg-brand-red"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
               </Link>
             );
           })}
@@ -95,62 +122,70 @@ export function Navbar({ user }: NavbarProps) {
         </button>
       </div>
 
-      {menuOpen && (
-        <div className="border-t border-brand-border bg-white px-4 pt-2 pb-6 lg:hidden">
-          <div className="flex flex-col">
-            {navLinks.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={cn(
-                    "border-b border-brand-border py-3 text-[15px] font-semibold",
-                    active ? "text-brand-red" : "text-brand-grey-dark"
-                  )}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden border-t border-brand-border bg-white lg:hidden"
+          >
+            <div className="flex flex-col px-4 pt-2 pb-6">
+              {navLinks.map((link) => {
+                const active = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={cn(
+                      "border-b border-brand-border py-3 text-[15px] font-semibold",
+                      active ? "text-brand-black" : "text-brand-grey-dark"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
 
-            {user ? (
-              <>
+              {user ? (
+                <>
+                  <Link
+                    href="/wishlist"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 border-b border-brand-border py-3 text-[15px] font-semibold text-brand-grey-dark"
+                  >
+                    <Heart size={17} /> Wishlist
+                  </Link>
+                  <div className="flex items-center gap-1.5 py-3 text-[13px] font-semibold text-brand-grey-dark">
+                    <UserIcon size={14} /> {user.fullName || user.email}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 py-3 text-left text-[15px] font-semibold text-brand-grey-mid"
+                  >
+                    <LogOut size={16} /> Log out
+                  </button>
+                </>
+              ) : (
                 <Link
-                  href="/wishlist"
+                  href="/login"
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 border-b border-brand-border py-3 text-[15px] font-semibold text-brand-grey-dark"
+                  className="border-b border-brand-border py-3 text-[15px] font-semibold text-brand-grey-dark"
                 >
-                  <Heart size={17} /> Wishlist
+                  Log in
                 </Link>
-                <div className="flex items-center gap-1.5 py-3 text-[13px] font-semibold text-brand-grey-dark">
-                  <UserIcon size={14} /> {user.fullName || user.email}
-                </div>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 py-3 text-left text-[15px] font-semibold text-brand-grey-mid"
-                >
-                  <LogOut size={16} /> Log out
-                </button>
-              </>
-            ) : (
-              <Link
-                href="/login"
-                onClick={() => setMenuOpen(false)}
-                className="border-b border-brand-border py-3 text-[15px] font-semibold text-brand-grey-dark"
-              >
-                Log in
-              </Link>
-            )}
+              )}
 
-            <Button href="/quote" className="mt-4 w-full justify-center" onClick={() => setMenuOpen(false)}>
-              Get a quote
-            </Button>
-          </div>
-        </div>
-      )}
+              <Button href="/quote" className="mt-4 w-full justify-center" onClick={() => setMenuOpen(false)}>
+                Get a quote
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

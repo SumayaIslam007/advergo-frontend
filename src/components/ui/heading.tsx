@@ -7,14 +7,16 @@ interface HeadingProps {
   className?: string;
 }
 
-/** Section heading — the site's signature large red display heading. */
+/** Section heading — confident near-black display type; hierarchy comes from size/weight, not color. */
 export function Heading({ children, center = false, as = "h2", className }: HeadingProps) {
   const Tag = as;
   return (
     <Tag
       className={cn(
-        "mb-2 font-extrabold leading-[1.15] tracking-[-0.4px] text-brand-red",
-        as === "h1" ? "text-3xl sm:text-[34px]" : "text-2xl sm:text-[30px]",
+        "mb-3 text-balance font-bold leading-[1.12] text-brand-black",
+        as === "h1"
+          ? "text-[2.25rem] tracking-[-0.02em] sm:text-[3rem]"
+          : "text-[1.625rem] tracking-[-0.015em] sm:text-[2.125rem]",
         center && "text-center",
         className
       )}

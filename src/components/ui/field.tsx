@@ -1,4 +1,5 @@
 import { type InputHTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
 interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -14,7 +15,10 @@ export function Field({ label, id, className, ...props }: FieldProps) {
       </label>
       <input
         id={inputId}
-        className="w-full rounded-[7px] border-[1.5px] border-brand-border bg-white px-3 py-2.5 text-[13px] text-black outline-none transition-colors focus:border-brand-red"
+        className={cn(
+          "w-full rounded-lg border border-brand-border bg-white px-3.5 py-2.5 text-[13px] text-brand-black outline-none transition-all duration-150 focus:border-brand-red focus:ring-4 focus:ring-brand-red/10",
+          className
+        )}
         {...props}
       />
     </div>

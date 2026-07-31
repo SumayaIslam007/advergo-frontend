@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Heading } from "@/components/ui/heading";
+import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 import { PageHeader } from "@/components/layout/page-header";
@@ -31,7 +33,7 @@ export default async function AboutPage() {
       />
 
       <Section background="white">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+        <Reveal className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
           <div>
             <Eyebrow>Who we are</Eyebrow>
             <Heading>Quality with commitment</Heading>
@@ -52,51 +54,57 @@ export default async function AboutPage() {
             alt="Advergo factory floor"
             height={360}
           />
-        </div>
+        </Reveal>
       </Section>
 
       <Section background="grey">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="rounded-xl border-t-[3px] border-brand-red bg-white p-8 shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
-            <Eyebrow>Our mission</Eyebrow>
-            <h3 className="mb-3.5 text-lg font-bold leading-tight text-black">
-              Empowering athletes &amp; organisations
-            </h3>
-            <p className="text-[13px] leading-[1.8] text-brand-grey-dark">
-              To provide high-quality, innovative, and durable sports and fashion apparel that empowers
-              athletes and organisations to perform at their best. We are committed to excellence in
-              manufacturing, timely delivery, and building lasting partnerships through superior craftsmanship
-              and personalised service.
-            </p>
-          </div>
-          <div className="rounded-xl border-t-[3px] border-brand-red bg-white p-8 shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
-            <Eyebrow>Our vision</Eyebrow>
-            <h3 className="mb-3.5 text-lg font-bold leading-tight text-black">
-              A leading global name in sportswear
-            </h3>
-            <p className="text-[13px] leading-[1.8] text-brand-grey-dark">
-              To become a leading global name in the sports and fashion apparel industry, recognised for our
-              innovation, sustainable practices, and unwavering commitment to quality. We aim to set new
-              benchmarks in textile manufacturing, ensuring every garment reflects the spirit of excellence.
-            </p>
-          </div>
+          <Reveal>
+            <Card className="p-8" hover={false}>
+              <Eyebrow>Our mission</Eyebrow>
+              <h3 className="mb-3.5 text-lg font-bold leading-tight text-brand-black">
+                Empowering athletes &amp; organisations
+              </h3>
+              <p className="text-[13px] leading-[1.8] text-brand-grey-dark">
+                To provide high-quality, innovative, and durable sports and fashion apparel that empowers
+                athletes and organisations to perform at their best. We are committed to excellence in
+                manufacturing, timely delivery, and building lasting partnerships through superior craftsmanship
+                and personalised service.
+              </p>
+            </Card>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <Card className="p-8" hover={false}>
+              <Eyebrow>Our vision</Eyebrow>
+              <h3 className="mb-3.5 text-lg font-bold leading-tight text-brand-black">
+                A leading global name in sportswear
+              </h3>
+              <p className="text-[13px] leading-[1.8] text-brand-grey-dark">
+                To become a leading global name in the sports and fashion apparel industry, recognised for our
+                innovation, sustainable practices, and unwavering commitment to quality. We aim to set new
+                benchmarks in textile manufacturing, ensuring every garment reflects the spirit of excellence.
+              </p>
+            </Card>
+          </Reveal>
         </div>
       </Section>
 
       <Section background="white">
-        <div className="mb-11 text-center">
+        <Reveal className="mb-11 text-center">
           <Eyebrow center>Infrastructure</Eyebrow>
           <Heading center>Production capability</Heading>
-        </div>
+        </Reveal>
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {capabilityStats.map((s) => (
-            <div key={s.label} className="rounded-xl bg-brand-grey-light p-6 text-center shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
-              <div className="mb-3 text-[30px]">{s.icon}</div>
-              <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-grey-mid">
-                {s.label}
-              </p>
-              <p className="text-base font-extrabold text-brand-red">{s.value}</p>
-            </div>
+          {capabilityStats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 0.06}>
+              <Card className="p-6 text-center">
+                <div className="mb-3 text-[30px]">{s.icon}</div>
+                <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-grey-mid">
+                  {s.label}
+                </p>
+                <p className="text-base font-extrabold text-brand-red">{s.value}</p>
+              </Card>
+            </Reveal>
           ))}
         </div>
       </Section>

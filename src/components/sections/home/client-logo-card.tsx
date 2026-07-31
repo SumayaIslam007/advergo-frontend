@@ -12,7 +12,7 @@ export function ClientLogoCard({ client }: ClientLogoCardProps) {
   const [errored, setErrored] = useState(false);
 
   return (
-    <div className="group flex min-h-[90px] flex-col items-center justify-center gap-2.5 rounded-[10px] border-[1.5px] border-transparent bg-white p-4 shadow-[0_2px_16px_rgba(0,0,0,0.07)] transition-all hover:-translate-y-0.5 hover:border-brand-red hover:shadow-[0_6px_24px_rgba(0,0,0,0.10)]">
+    <div className="group flex min-h-[90px] flex-col items-center justify-center gap-2.5 rounded-[10px] border border-brand-border bg-white p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-red hover:shadow-[0_12px_28px_-8px_rgba(169,18,24,0.2)]">
       {!errored ? (
         <div className="relative h-[38px] w-[90px] grayscale opacity-[0.78] transition-all group-hover:opacity-100 group-hover:grayscale-0">
           <Image

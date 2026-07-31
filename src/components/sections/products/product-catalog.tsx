@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Reveal } from "@/components/ui/reveal";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types";
 import { ProductCard } from "./product-card";
@@ -45,8 +46,10 @@ export function ProductCatalog({ products, initialCategory = "all", wishlistedPr
 
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} initiallyWishlisted={wishlistedIds.has(product.id)} />
+          {filtered.map((product, i) => (
+            <Reveal key={product.id} delay={(i % 6) * 0.06}>
+              <ProductCard product={product} initiallyWishlisted={wishlistedIds.has(product.id)} />
+            </Reveal>
           ))}
         </div>
       ) : (

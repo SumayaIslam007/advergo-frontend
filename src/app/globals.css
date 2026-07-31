@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f1117;
 }
 
 @theme inline {
@@ -14,8 +14,9 @@
   /* Brand tokens — generates bg-brand-red, text-brand-red, border-brand-red, etc. */
   --color-brand-red: #a91218;
   --color-brand-red-dark: #8a0f14;
-  --color-brand-black: #010101;
-  --color-brand-grey-light: #f8f8f8;
+  --color-brand-red-deep: #4a0a0d;
+  --color-brand-black: #0f1117;
+  --color-brand-grey-light: #f7f7f8;
   --color-brand-grey-mid: #6b7280;
   --color-brand-grey-dark: #374151;
   --color-brand-border: #e5e7eb;
@@ -24,4 +25,14 @@
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+::selection {
+  background: var(--color-brand-red);
+  color: #fff;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(26px, -20px) scale(1.1); }
 }

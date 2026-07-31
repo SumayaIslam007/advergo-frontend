@@ -39,7 +39,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-brand-grey-light">
       <PageHeader eyebrow="Account" title="Log in" subtitle="Access your orders, invoices, and wishlist." />
       <div className="mx-auto max-w-[420px] px-6 py-10">
-        <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-9 shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
+        <form onSubmit={handleSubmit} className="rounded-2xl border border-brand-border bg-white p-9">
           {error && (
             <div className="mb-4 rounded-lg bg-red-50 p-3.5 text-xs font-semibold text-brand-red">{error}</div>
           )}

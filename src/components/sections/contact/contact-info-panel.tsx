@@ -15,7 +15,7 @@ export async function ContactInfoPanel() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-2xl bg-black p-7">
+      <div className="rounded-2xl bg-brand-black p-7">
         <h3 className="mb-5.5 text-base font-bold text-white">Contact information</h3>
         {infoRows.map(({ icon: Icon, label, value }) => (
           <div key={label} className="mb-4.5 flex items-start gap-3">
@@ -39,9 +39,9 @@ export async function ContactInfoPanel() {
         </a>
       </div>
 
-      <div className="rounded-2xl bg-brand-red p-5.5">
-        <p className="mb-2 text-sm font-bold text-white">Business hours</p>
-        <p className="text-[13px] leading-[1.85] text-white/85">
+      <div className="rounded-2xl border border-brand-border bg-white p-5.5">
+        <p className="mb-2 text-sm font-bold text-brand-red">Business hours</p>
+        <p className="text-[13px] leading-[1.85] text-brand-grey-dark">
           Saturday – Thursday: 9:00 AM – 7:00 PM
           <br />
           Friday: Closed

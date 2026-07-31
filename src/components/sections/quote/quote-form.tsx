@@ -135,11 +135,11 @@ export function QuoteForm({
 
   if (result) {
     return (
-      <div className="mx-auto flex min-h-[60vh] max-w-[400px] flex-col items-center justify-center rounded-2xl bg-white p-14 text-center shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
+      <div className="mx-auto flex min-h-[60vh] max-w-[400px] flex-col items-center justify-center rounded-2xl border border-brand-border bg-white p-14 text-center">
         <div className="mb-4.5 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-brand-red/10">
           <Check size={28} className="text-brand-red" />
         </div>
-        <h2 className="mb-2.5 text-xl font-extrabold text-black">Request submitted!</h2>
+        <h2 className="mb-2.5 text-xl font-extrabold text-brand-black">Request submitted!</h2>
         <p className="mb-1 text-xs font-semibold uppercase tracking-[0.08em] text-brand-grey-mid">
           Reference: {result.referenceCode}
         </p>
@@ -168,7 +168,7 @@ export function QuoteForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-9 shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
+    <form onSubmit={handleSubmit} className="rounded-2xl border border-brand-border bg-white p-9">
       {formError && (
         <div className="mb-4 rounded-lg bg-red-50 p-3.5 text-xs font-semibold text-brand-red">{formError}</div>
       )}

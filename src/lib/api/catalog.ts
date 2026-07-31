@@ -13,6 +13,10 @@ export function getProducts(params?: { category?: string; featured?: boolean }) 
   return apiFetch<Product[]>(`/catalog/products/${qs ? `?${qs}` : ""}`);
 }
 
+export function getProduct(id: number) {
+  return apiFetch<Product>(`/catalog/products/${id}/`);
+}
+
 export function getFabrics() {
   return apiFetch<Fabric[]>("/catalog/fabrics/");
 }

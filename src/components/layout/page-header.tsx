@@ -1,3 +1,6 @@
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { Heading } from "@/components/ui/heading";
+
 interface PageHeaderProps {
   eyebrow: string;
   title: string;
@@ -7,11 +10,13 @@ interface PageHeaderProps {
 /** Banner used at the top of every non-home page. */
 export function PageHeader({ eyebrow, title, subtitle }: PageHeaderProps) {
   return (
-    <div className="border-b border-brand-border bg-brand-grey-light px-6 pb-11 pt-[52px]">
+    <div className="border-b border-brand-border bg-brand-grey-light px-6 pb-14 pt-16 sm:pt-20">
       <div className="mx-auto max-w-[1140px]">
-        <p className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-red">{eyebrow}</p>
-        <h1 className="mb-2 text-[34px] font-extrabold tracking-[-0.5px] text-brand-red">{title}</h1>
-        {subtitle && <p className="text-sm text-brand-grey-dark">{subtitle}</p>}
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <Heading as="h1" className="mb-2">
+          {title}
+        </Heading>
+        {subtitle && <p className="max-w-[560px] text-[15px] leading-[1.7] text-brand-grey-dark">{subtitle}</p>}
       </div>
     </div>
   );

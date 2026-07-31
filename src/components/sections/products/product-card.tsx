@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,7 @@ function JerseyPlaceholder({ color }: { color: string }) {
 export function ProductCard({ product, initiallyWishlisted = false }: ProductCardProps) {
   const [wished, setWished] = useState(initiallyWishlisted);
   const [pending, setPending] = useState(false);
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
   const router = useRouter();
 
   const toggleWishlist = async () => {
@@ -56,33 +58,61 @@ export function ProductCard({ product, initiallyWishlisted = false }: ProductCar
     setPending(false);
   };
 
+  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ rx: py * -7, ry: px * 7 });
+  };
+  const resetTilt = () => setTilt({ rx: 0, ry: 0 });
+  const tilted = tilt.rx !== 0 || tilt.ry !== 0;
+
   return (
-    <div className="group overflow-hidden rounded-xl bg-white shadow-[0_2px_16px_rgba(0,0,0,0.07)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(0,0,0,0.11)]">
+    <div
+      onMouseMove={handleMove}
+      onMouseLeave={resetTilt}
+      style={{
+        transform: `perspective(900px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) translateY(${tilted ? -8 : 0}px)`,
+      }}
+      className="group overflow-hidden rounded-xl border border-brand-border bg-white transition-[transform,box-shadow,border-color] duration-300 ease-out will-change-transform hover:border-white hover:shadow-[0_26px_50px_-14px_rgba(169,18,24,0.35)]"
+    >
       <div className="relative">
-        {product.image ? (
-          <div className="relative h-[180px] w-full overflow-hidden bg-gray-100">
-            <Image src={product.image} alt={product.name} fill className="object-cover" />
-          </div>
-        ) : (
-          <JerseyPlaceholder color={product.accentColor} />
-        )}
+        <Link href={`/products/${product.id}`} className="block">
+          {product.image ? (
+            <div className="relative h-[180px] w-full overflow-hidden bg-gray-100">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              />
+            </div>
+          ) : (
+            <JerseyPlaceholder color={product.accentColor} />
+          )}
+        </Link>
         <button
           type="button"
           onClick={toggleWishlist}
           disabled={pending}
           aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
           aria-pressed={wished}
-          className="absolute right-2.5 top-2.5 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white shadow-[0_2px_16px_rgba(0,0,0,0.07)] disabled:opacity-60"
+          className="absolute right-2.5 top-2.5 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white/95 shadow-[0_2px_10px_rgba(0,0,0,0.12)] backdrop-blur-sm transition-transform hover:scale-110 disabled:opacity-60"
         >
           <Heart size={13} className={cn(wished ? "fill-brand-red text-brand-red" : "text-brand-grey-mid")} />
         </button>
-        <span className="absolute left-2.5 top-2.5 rounded bg-brand-red px-2 py-0.5 text-[10px] font-bold text-white">
+        <span className="absolute left-2.5 top-2.5 rounded-full bg-[linear-gradient(120deg,var(--color-brand-red),var(--color-brand-red-dark))] px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_4px_10px_-2px_rgba(169,18,24,0.5)]">
           {product.category}
         </span>
       </div>
 
       <div className="px-[18px] pb-5 pt-4">
-        <p className="mb-0.5 text-sm font-bold text-black">{product.name}</p>
+        <Link
+          href={`/products/${product.id}`}
+          className="mb-0.5 block text-sm font-bold text-brand-black transition-colors hover:text-brand-red"
+        >
+          {product.name}
+        </Link>
         <p className="mb-2 text-xs text-brand-grey-mid">{product.fabric}</p>
         <div className="mb-2.5 flex items-center gap-1.5">
           <Stars rating={product.rating} />

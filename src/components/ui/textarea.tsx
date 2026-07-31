@@ -1,4 +1,5 @@
 import { type TextareaHTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
 interface TextareaFieldProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
@@ -14,7 +15,10 @@ export function TextareaField({ label, id, className, rows = 4, ...props }: Text
       <textarea
         id={fieldId}
         rows={rows}
-        className="w-full resize-y rounded-[7px] border-[1.5px] border-brand-border bg-white px-3 py-2.5 text-[13px] text-black outline-none transition-colors focus:border-brand-red"
+        className={cn(
+          "w-full resize-y rounded-lg border border-brand-border bg-white px-3.5 py-2.5 text-[13px] text-brand-black outline-none transition-all duration-150 focus:border-brand-red focus:ring-4 focus:ring-brand-red/10",
+          className
+        )}
         {...props}
       />
     </div>

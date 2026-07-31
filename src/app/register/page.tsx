@@ -51,7 +51,7 @@ export default function RegisterPage() {
         subtitle="Needed to place an order, track it, and download invoices."
       />
       <div className="mx-auto max-w-[420px] px-6 py-10">
-        <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-9 shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
+        <form onSubmit={handleSubmit} className="rounded-2xl border border-brand-border bg-white p-9">
           {formError && (
             <div className="mb-4 rounded-lg bg-red-50 p-3.5 text-xs font-semibold text-brand-red">{formError}</div>
           )}

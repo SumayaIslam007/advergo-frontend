@@ -23,8 +23,8 @@ export function ContactForm() {
   };
 
   return (
-    <div className="rounded-2xl bg-white p-9 shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
-      <h3 className="mb-5.5 text-lg font-bold text-black">Send us a message</h3>
+    <div className="rounded-2xl border border-brand-border bg-white p-9">
+      <h3 className="mb-5.5 text-lg font-bold text-brand-black">Send us a message</h3>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Field label="Your name" required value={values.name} onChange={(e) => update("name", e.target.value)} placeholder="Full name" />
         <Field

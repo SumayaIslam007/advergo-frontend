@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { PageHeader } from "@/components/layout/page-header";
+import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { ProductCard } from "@/components/sections/products/product-card";
 import { isAuthenticated } from "@/lib/auth/server-fetch";
@@ -23,8 +24,10 @@ export default async function WishlistPage() {
       <Section background="grey">
         {items.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((item) => (
-              <ProductCard key={item.id} product={item.product} initiallyWishlisted />
+            {items.map((item, i) => (
+              <Reveal key={item.id} delay={(i % 6) * 0.06}>
+                <ProductCard product={item.product} initiallyWishlisted />
+              </Reveal>
             ))}
           </div>
         ) : (
