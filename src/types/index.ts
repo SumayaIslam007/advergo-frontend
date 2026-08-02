@@ -84,8 +84,11 @@ export interface GalleryItem {
   description: string;
 }
 
+export type AchievementKind = "document" | "award";
+
 export interface Achievement {
-  icon: string;
+  kind: AchievementKind;
+  image: string | null;
   title: string;
   year: string;
   issuingBody: string;
