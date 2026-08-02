@@ -9,7 +9,7 @@ import { Testimonials } from "@/components/sections/home/testimonials";
 import { GalleryPreview } from "@/components/sections/home/gallery-preview";
 import { ClientLogos } from "@/components/sections/home/client-logos";
 import {
-  getActiveBanner,
+  getBanners,
   getAchievements,
   getCategories,
   getClientLogos,
@@ -24,7 +24,7 @@ import { getMyWishlistProductIds } from "@/lib/auth/wishlist";
 
 export default async function HomePage() {
   const [
-    banner,
+    banners,
     stats,
     sportCategories,
     products,
@@ -35,7 +35,7 @@ export default async function HomePage() {
     clientLogos,
     wishlistedIds,
   ] = await Promise.all([
-    safe(getActiveBanner(), null),
+    safe(getBanners(), []),
     safe(getStats(), []),
     safe(getCategories(), []),
     safe(getProducts({ featured: true }), []),
@@ -49,7 +49,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero banner={banner} />
+      <Hero banners={banners} />
       <StatsBar stats={stats} />
       <Categories categories={sportCategories} />
       <FeaturedProducts products={products} wishlistedProductIds={[...wishlistedIds]} />

@@ -110,7 +110,7 @@ export function Navbar({ user }: NavbarProps) {
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="relative h-28 w-28 shrink-0 overflow-hidden rounded-[10px]"
             >
-              <Image src="/logo-header.png" alt="Advergo logo" fill className="object-contain" />
+              <Image src="/logo-header.png" alt="Advergo logo" fill sizes="112px" className="object-contain" />
             </motion.div>
           </Link>
 

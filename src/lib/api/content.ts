@@ -10,8 +10,8 @@ import type {
   Stat,
 } from "@/types";
 
-export function getActiveBanner() {
-  return apiFetch<Banner | null>("/content/banners/active/");
+export function getBanners() {
+  return apiFetch<Banner[]>("/content/banners/active/");
 }
 
 export function getStats() {

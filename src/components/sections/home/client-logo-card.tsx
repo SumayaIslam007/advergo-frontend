@@ -9,7 +9,7 @@ interface ClientLogoCardProps {
 }
 
 export function ClientLogoCard({ client }: ClientLogoCardProps) {
-  const [errored, setErrored] = useState(false);
+  const [errored, setErrored] = useState(!client.logoUrl);
 
   return (
     <div className="group flex min-h-[90px] flex-col items-center justify-center gap-2.5 rounded-[10px] border border-brand-border bg-white p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-red hover:shadow-[0_12px_28px_-8px_rgba(169,18,24,0.2)]">
