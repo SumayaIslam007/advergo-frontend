@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
 import { Section } from "@/components/ui/section";
 import { GalleryGrid } from "@/components/sections/gallery/gallery-grid";
-import { getGalleryItems, safe } from "@/lib/api";
+import { getGalleryCategories, getGalleryItems, safe } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
-  const galleryItems = await safe(getGalleryItems(), []);
+  const [galleryItems, galleryCategories] = await Promise.all([
+    safe(getGalleryItems(), []),
+    safe(getGalleryCategories(), []),
+  ]);
 
   return (
     <div className="min-h-screen bg-brand-grey-light">
@@ -20,7 +23,7 @@ export default async function GalleryPage() {
         subtitle="Factory sections, production process, and client order deliveries."
       />
       <Section background="grey">
-        <GalleryGrid items={galleryItems} />
+        <GalleryGrid items={galleryItems} categories={galleryCategories} />
       </Section>
     </div>
   );

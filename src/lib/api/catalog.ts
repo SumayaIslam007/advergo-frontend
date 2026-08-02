@@ -1,8 +1,8 @@
 import { apiFetch } from "./client";
-import type { Fabric, Product, SizeChartRow, SportCategory } from "@/types";
+import type { Category, Fabric, Product, SizeChartRow } from "@/types";
 
 export function getCategories() {
-  return apiFetch<SportCategory[]>("/catalog/categories/");
+  return apiFetch<Category[]>("/catalog/categories/");
 }
 
 export function getProducts(params?: { category?: string; featured?: boolean }) {

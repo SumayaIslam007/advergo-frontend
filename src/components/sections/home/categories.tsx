@@ -3,10 +3,10 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { Heading } from "@/components/ui/heading";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
-import type { SportCategory } from "@/types";
+import type { Category } from "@/types";
 
 interface CategoriesProps {
-  categories: SportCategory[];
+  categories: Category[];
 }
 
 export function Categories({ categories }: CategoriesProps) {
@@ -14,7 +14,7 @@ export function Categories({ categories }: CategoriesProps) {
     <Section background="white">
       <Reveal className="mb-11 text-center">
         <Eyebrow center>What we make</Eyebrow>
-        <Heading center>Sport categories</Heading>
+        <Heading center>Product categories</Heading>
       </Reveal>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {categories.map((category, i) => (

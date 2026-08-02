@@ -26,7 +26,7 @@ export default async function HomePage() {
   const [
     banners,
     stats,
-    sportCategories,
+    categories,
     products,
     processSteps,
     achievements,
@@ -51,7 +51,7 @@ export default async function HomePage() {
     <>
       <Hero banners={banners} />
       <StatsBar stats={stats} />
-      <Categories categories={sportCategories} />
+      <Categories categories={categories} />
       <FeaturedProducts products={products} wishlistedProductIds={[...wishlistedIds]} />
       <HowItWorks steps={processSteps} />
       <CtaBanner />

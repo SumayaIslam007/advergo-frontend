@@ -23,15 +23,8 @@ export interface Stat {
   label: string;
 }
 
-export type SportCategoryId =
-  | "football"
-  | "cycling"
-  | "cricket"
-  | "marathon"
-  | "corporate";
-
-export interface SportCategory {
-  id: SportCategoryId;
+export interface Category {
+  id: string;
   name: string;
   icon: string;
   description: string;
@@ -76,13 +69,18 @@ export interface Review {
   text: string;
 }
 
-export type GalleryCategory = "factory" | "clients";
+export interface GalleryCategory {
+  id: string;
+  name: string;
+  icon: string;
+}
 
 export interface GalleryItem {
   id: number;
   src: string | null;
   label: string;
-  category: GalleryCategory;
+  category: string;
+  categoryName: string;
   description: string;
 }
 

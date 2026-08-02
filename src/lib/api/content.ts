@@ -30,7 +30,11 @@ export function getProcessSteps() {
   return apiFetch<ProcessStep[]>("/content/steps/");
 }
 
-export function getGalleryItems(category?: GalleryCategory) {
+export function getGalleryCategories() {
+  return apiFetch<GalleryCategory[]>("/content/gallery-categories/");
+}
+
+export function getGalleryItems(category?: string) {
   const qs = category ? `?category=${category}` : "";
   return apiFetch<GalleryItem[]>(`/content/gallery/${qs}`);
 }

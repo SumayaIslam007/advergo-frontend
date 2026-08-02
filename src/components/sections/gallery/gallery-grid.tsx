@@ -8,16 +8,11 @@ import type { GalleryCategory, GalleryItem } from "@/types";
 
 interface GalleryGridProps {
   items: GalleryItem[];
+  categories: GalleryCategory[];
 }
 
-const tabs: { id: GalleryCategory | "all"; label: string }[] = [
-  { id: "all", label: "All photos" },
-  { id: "factory", label: "🏭  Factory" },
-  { id: "clients", label: "🤝  Client deliveries" },
-];
-
-export function GalleryGrid({ items }: GalleryGridProps) {
-  const [tab, setTab] = useState<GalleryCategory | "all">("all");
+export function GalleryGrid({ items, categories }: GalleryGridProps) {
+  const [tab, setTab] = useState<string>("all");
 
   const visible = useMemo(
     () => (tab === "all" ? items : items.filter((item) => item.category === tab)),
@@ -26,18 +21,31 @@ export function GalleryGrid({ items }: GalleryGridProps) {
 
   return (
     <div>
-      <div className="mb-7 flex gap-2">
-        {tabs.map((t) => (
+      <div className="mb-7 flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={() => setTab("all")}
+          className={cn(
+            "rounded-full border-[1.5px] px-4.5 py-2 text-[13px] font-semibold transition-colors",
+            tab === "all" ? "border-black bg-black text-white" : "border-brand-border bg-white text-brand-grey-dark"
+          )}
+        >
+          All photos
+        </button>
+        {categories.map((category) => (
           <button
-            key={t.id}
+            key={category.id}
             type="button"
-            onClick={() => setTab(t.id)}
+            onClick={() => setTab(category.id)}
             className={cn(
               "rounded-full border-[1.5px] px-4.5 py-2 text-[13px] font-semibold transition-colors",
-              tab === t.id ? "border-black bg-black text-white" : "border-brand-border bg-white text-brand-grey-dark"
+              tab === category.id
+                ? "border-black bg-black text-white"
+                : "border-brand-border bg-white text-brand-grey-dark"
             )}
           >
-            {t.label}
+            {category.icon ? `${category.icon}  ` : ""}
+            {category.name}
           </button>
         ))}
       </div>
@@ -50,13 +58,8 @@ export function GalleryGrid({ items }: GalleryGridProps) {
               <div className="px-4 py-3">
                 <div className="flex items-center justify-between">
                   <p className="text-[13px] font-bold text-brand-black">{item.label}</p>
-                  <span
-                    className={cn(
-                      "rounded-full px-2 py-0.5 text-[10px] font-semibold",
-                      item.category === "clients" ? "bg-brand-red/10 text-brand-red" : "bg-brand-grey-light text-brand-grey-mid"
-                    )}
-                  >
-                    {item.category === "factory" ? "Factory" : "Client"}
+                  <span className="rounded-full bg-brand-grey-light px-2 py-0.5 text-[10px] font-semibold text-brand-grey-mid">
+                    {item.categoryName}
                   </span>
                 </div>
                 <p className="mt-0.5 text-[11px] text-brand-grey-mid">{item.description}</p>

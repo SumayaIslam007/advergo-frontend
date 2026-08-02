@@ -8,17 +8,17 @@ import { SelectField } from "@/components/ui/select";
 import { TextareaField } from "@/components/ui/textarea";
 import { ApiError, estimatePrice, submitQuoteRequest } from "@/lib/api";
 import type {
+  Category,
   Fabric,
   PriceEstimate,
   Product,
   QuoteFormValues,
   QuoteRequestResult,
   SizeChartRow,
-  SportCategory,
 } from "@/types";
 
 interface QuoteFormProps {
-  categories: SportCategory[];
+  categories: Category[];
   fabrics: Fabric[];
   products: Product[];
   sizeChart: SizeChartRow[];
