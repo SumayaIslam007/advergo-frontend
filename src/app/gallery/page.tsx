@@ -16,7 +16,7 @@ export default async function GalleryPage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-brand-grey-light">
+    <div className="min-h-full bg-brand-grey-light">
       <PageHeader
         eyebrow="Our work"
         title="Gallery"

@@ -14,7 +14,7 @@ export default async function FabricGuidePage() {
   const fabrics = await safe(getFabrics(), []);
 
   return (
-    <div className="min-h-screen bg-brand-grey-light">
+    <div className="min-h-full bg-brand-grey-light">
       <PageHeader
         eyebrow="Materials"
         title="Fabric guide"

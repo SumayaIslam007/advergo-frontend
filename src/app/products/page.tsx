@@ -23,7 +23,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   ]);
 
   return (
-    <div className="min-h-screen bg-brand-grey-light">
+    <div className="min-h-full bg-brand-grey-light">
       <PageHeader
         eyebrow="Catalogue"
         title="All products"

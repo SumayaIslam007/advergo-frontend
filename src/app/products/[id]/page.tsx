@@ -43,7 +43,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const sizeRows = scopedSizeRows.length > 0 ? scopedSizeRows : sizeChart.filter((row) => row.categorySlug === null);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-full bg-white">
       <div className="border-b border-brand-border bg-brand-grey-light px-6 py-4">
         <div className="mx-auto max-w-[1140px]">
           <Link

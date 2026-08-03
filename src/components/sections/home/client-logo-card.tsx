@@ -9,14 +9,18 @@ interface ClientLogoCardProps {
 }
 
 export function ClientLogoCard({ client }: ClientLogoCardProps) {
-  const [errored, setErrored] = useState(!client.logoUrl);
+  const logoSrc = client.logo || client.logoUrl || null;
+  const [errored, setErrored] = useState(!logoSrc);
 
   return (
-    <div className="group flex min-h-[90px] flex-col items-center justify-center gap-2.5 rounded-[10px] border border-brand-border bg-white p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-red hover:shadow-[0_12px_28px_-8px_rgba(169,18,24,0.2)]">
-      {!errored ? (
-        <div className="relative h-[38px] w-[90px] grayscale opacity-[0.78] transition-all group-hover:opacity-100 group-hover:grayscale-0">
+    <div
+      title={client.name}
+      className="group flex h-26 items-center justify-center rounded-xl border border-brand-border bg-white px-3 transition-all duration-300 hover:-translate-y-1 hover:border-brand-red/40 hover:shadow-[0_16px_32px_-12px_rgba(169,18,24,0.22)]"
+    >
+      {!errored && logoSrc ? (
+        <div className="relative h-16 w-full">
           <Image
-            src={client.logoUrl}
+            src={logoSrc}
             alt={client.name}
             fill
             className="object-contain"
@@ -24,13 +28,10 @@ export function ClientLogoCard({ client }: ClientLogoCardProps) {
           />
         </div>
       ) : (
-        <span className="text-center text-[11px] font-bold leading-tight text-brand-grey-dark group-hover:text-brand-red">
+        <span className="text-center text-[12px] font-bold leading-tight text-brand-grey-dark transition-colors duration-300 group-hover:text-brand-red">
           {client.name}
         </span>
       )}
-      <p className="text-center text-[10px] font-medium leading-tight text-brand-grey-mid group-hover:text-brand-red">
-        {client.name}
-      </p>
     </div>
   );
 }

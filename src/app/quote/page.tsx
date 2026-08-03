@@ -22,7 +22,7 @@ export default async function QuotePage({ searchParams }: QuotePageProps) {
   ]);
 
   return (
-    <div className="min-h-screen bg-brand-grey-light">
+    <div className="min-h-full bg-brand-grey-light">
       <PageHeader
         eyebrow="No payment required"
         title="Get a custom quote"

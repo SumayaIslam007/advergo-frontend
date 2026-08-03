@@ -44,7 +44,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-grey-light">
+    <div className="min-h-full bg-brand-grey-light">
       <PageHeader
         eyebrow="Account"
         title="Create an account"

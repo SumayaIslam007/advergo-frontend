@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
@@ -17,6 +17,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const oswald = Oswald({
+  variable: "--font-heading",
+  weight: ["600", "700"],
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Advergo - Sports & Fashion Wear Ltd.",
@@ -30,7 +36,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const [company, user] = await Promise.all([getCompanyInfoSafe(), getCurrentUser()]);
 
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} h-full antialiased`}
+    >
       <body className="flex min-h-full flex-col font-sans">
         <Navbar user={user} />
         <main className="flex-1">{children}</main>

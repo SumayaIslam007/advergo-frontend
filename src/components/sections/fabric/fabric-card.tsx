@@ -23,7 +23,7 @@ export function FabricCard({ fabric }: FabricCardProps) {
 
   return (
     <div className="group overflow-hidden rounded-2xl border border-brand-border bg-white transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white hover:shadow-[0_24px_48px_-14px_rgba(15,17,23,0.2)]">
-      <div className="relative h-[132px] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden">
         {fabric.image ? (
           <Image
             src={fabric.image}
@@ -38,15 +38,15 @@ export function FabricCard({ fabric }: FabricCardProps) {
             style={{ backgroundImage: pattern }}
           />
         )}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_40%,rgba(0,0,0,0.55)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0)_35%,rgba(0,0,0,0.75)_100%)]" />
         {fabric.grade && (
-          <span className="absolute bottom-3 left-4 text-[10px] font-bold uppercase tracking-[0.08em] text-white/90">
+          <span className="absolute bottom-3.5 left-4 rounded-full bg-black/55 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-white backdrop-blur-sm">
             {fabric.grade}
           </span>
         )}
       </div>
       <div className="p-5">
-        <p className="mb-0.5 text-[15px] font-bold text-brand-black">{fabric.name}</p>
+        <p className="mb-0.5 text-[16px] font-bold text-brand-black">{fabric.name}</p>
         <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.1em] text-brand-red">
           Best for: {fabric.bestFor}
         </p>

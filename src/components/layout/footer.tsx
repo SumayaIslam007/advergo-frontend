@@ -24,10 +24,14 @@ export function Footer({ company }: FooterProps) {
       <div className="mx-auto max-w-[1140px]">
         <div className="mb-10 grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.4fr]">
           <div>
-            <div className="mb-4 flex items-center gap-2.5">
-              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[10px] sm:h-28 sm:w-28 md:h-32 md:w-32 lg:h-36 lg:w-36">
-                <Image src="/logo-footer.png" alt="Advergo logo" fill sizes="144px" className="object-contain" />
-              </div>
+            <div className="mb-3 flex items-center gap-2.5">
+              <Image
+                src="/logo-footer.png"
+                alt="Advergo logo"
+                width={1000}
+                height={284}
+                className="h-auto w-24 shrink-0 sm:w-28 md:w-32 lg:w-36"
+              />
               {/* <div>
                 <div className="text-[13px] font-extrabold tracking-[0.04em]">ADVERGO</div>
                 <div className="text-[9px] tracking-[0.1em] text-gray-500">SPORTS &amp; FASHION WEAR LTD.</div>

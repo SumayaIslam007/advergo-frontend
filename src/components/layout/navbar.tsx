@@ -114,7 +114,7 @@ export function Navbar({ user }: NavbarProps) {
             </motion.div>
           </Link>
 
-          <div className="hidden items-center gap-5 lg:flex xl:gap-6">
+          <div className="hidden flex-1 items-center justify-center gap-5 lg:flex xl:gap-6">
             {navLinks.map((link) => {
               const active = pathname === link.href;
               return (
@@ -137,7 +137,9 @@ export function Navbar({ user }: NavbarProps) {
                 </Link>
               );
             })}
+          </div>
 
+          <div className="hidden shrink-0 items-center gap-4 lg:flex">
             {user ? (
               <div className="flex items-center gap-4">
                 <Link
@@ -160,7 +162,10 @@ export function Navbar({ user }: NavbarProps) {
                 </button>
               </div>
             ) : (
-              <Link href="/login" className="text-[13px] font-semibold text-brand-grey-dark hover:text-brand-red">
+              <Link
+                href="/login"
+                className="text-[14px] font-semibold whitespace-nowrap text-brand-grey-dark transition-colors hover:text-brand-red xl:text-[15px]"
+              >
                 Log in
               </Link>
             )}

@@ -36,7 +36,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-grey-light">
+    <div className="min-h-full bg-brand-grey-light">
       <PageHeader eyebrow="Account" title="Log in" subtitle="Access your orders, invoices, and wishlist." />
       <div className="mx-auto max-w-[420px] px-6 py-10">
         <form onSubmit={handleSubmit} className="rounded-2xl border border-brand-border bg-white p-9">

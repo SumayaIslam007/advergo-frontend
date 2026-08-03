@@ -19,7 +19,7 @@ export default async function WishlistPage() {
   const items = await getMyWishlist();
 
   return (
-    <div className="min-h-screen bg-brand-grey-light">
+    <div className="min-h-full bg-brand-grey-light">
       <PageHeader eyebrow="Saved" title="My wishlist" subtitle="Products you've favourited for later." />
       <Section background="grey">
         {items.length > 0 ? (

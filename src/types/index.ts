@@ -95,7 +95,9 @@ export interface Achievement {
 }
 
 export interface ClientLogo {
+  id: number;
   name: string;
+  logo: string | null;
   logoUrl: string;
 }
 
